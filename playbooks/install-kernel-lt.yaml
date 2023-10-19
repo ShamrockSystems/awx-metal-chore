@@ -1,0 +1,64 @@
+---
+- name: Install kernel-lt from ELRepo
+  hosts: r710
+  become: true
+  tasks:
+    - name: Import ELRepo GPG Key
+      rpm_key:
+        key: https://www.elrepo.org/RPM-GPG-KEY-elrepo.org
+        state: present
+
+    - name: Install ELRepo Repository
+      dnf:
+        name: 'https://www.elrepo.org/elrepo-release-9.el9.elrepo.noarch.rpm'
+        state: present
+        update_cache: false
+
+    - name: Enable elrepo-kernel Repository
+      community.general.ini_file:
+        path: /etc/yum.repos.d/elrepo.repo
+        section: elrepo-kernel
+        option: enabled
+        value: 1
+
+    - name: Install kernel-lt
+      yum:
+        name: kernel-lt
+        state: latest
+        update_cache: true
+
+    - name: Query installed kernel-lt versions
+      command: rpm -q kernel-lt # noqa command-instead-of-module
+      register: lt_kernels
+
+    - name: Extract kernel-lt versions
+      set_fact:
+        extracted_lt_versions: "{{ lt_kernels.stdout_lines | map('regex_replace', 'kernel-lt-', '') | list }}"
+      when: lt_kernels.stdout is defined and 'kernel-lt' in lt_kernels.stdout
+
+    - name: Sort kernel-lt versions
+      set_fact:
+        sorted_lt_versions: "{{ extracted_lt_versions | sort }}"
+      when: extracted_lt_versions is defined
+
+    - name: Set default kernel to latest kernel-lt
+      set_fact:
+        latest_lt_version: "{{ sorted_lt_versions[-1] }}"
+      when: sorted_lt_versions is defined and sorted_lt_versions | length > 0
+
+    - name: Set default kernel to kernel-lt in grub config
+      lineinfile:
+        path: /etc/default/grub
+        regexp: '^GRUB_DEFAULT='
+        line: "GRUB_DEFAULT={{ latest_lt_version }}"
+      register: line_changed
+      when: latest_lt_version is defined
+
+    - name: Rebuild grub config
+      command: grub2-mkconfig -o /boot/grub2/grub.cfg
+      when: line_changed is defined and line_changed.changed
+
+    - name: Reboot server
+      reboot:
+        msg: 'Automated reboot from Ansible kernel-lt install'
+      when: line_changed is defined and line_changed.changed
