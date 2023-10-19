@@ -1,0 +1,9 @@
+---
+- name: Activate Cockpit web console
+  hosts: r710
+  tasks:
+    - name: Enable and start Cockpit socket
+      ansible.builtin.systemd:
+        name: cockpit.socket
+        state: started
+        enabled: true
