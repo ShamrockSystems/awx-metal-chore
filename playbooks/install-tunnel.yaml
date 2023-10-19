@@ -1,0 +1,16 @@
+---
+- name: Install Cloudflare Tunnel using Podman
+  hosts: r710
+  tasks:
+    - name: Pull cloudflare/cloudflared image
+      containers.podman.podman_image:
+        name: docker.io/cloudflare/cloudflared:latest
+        force: true
+    - name: Run Cloudflare tunnel
+      containers.podman.podman_container:
+        name: cloudflared_tunnel
+        image: docker.io/cloudflare/cloudflared:latest
+        command: "tunnel --no-autoupdate run --token {{ cloudflare_tunnel_token }}"
+        network: host
+        state: started
+        recreate: true
