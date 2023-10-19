@@ -1,0 +1,54 @@
+---
+- name: DNF update and reboot if required
+  hosts: r710
+  become: true
+  tasks:
+    - name: Get packages with upgrades
+      ansible.builtin.dnf:
+        list: upgrades
+        state: latest
+        update_cache: true
+        update_only: true
+      when: not security_only
+    - name: Get packages with security fixes
+      ansible.builtin.dnf:
+        list: updates
+        security: true
+        state: latest
+        update_cache: true
+        update_only: true
+      when: security_only
+    - name: Apply upgrades
+      ansible.builtin.dnf:
+        name: '*'
+        state: latest
+        update_cache: false
+        update_only: false
+      when: not security_only
+    - name: Apply security fixes
+      ansible.builtin.dnf:
+        name: '*'
+        security: true
+        state: latest
+        update_cache: false
+        update_only: false
+      when: security_only
+    - name: Install dnf-utils
+      ansible.builtin.dnf:
+        name: 'dnf-utils'
+        state: latest
+        update_cache: true
+    - name: Check if a reboot is required
+      command: needs-restarting -r
+      register: reg_reboot_required
+      ignore_errors: true
+      failed_when: false
+      changed_when: reg_reboot_required.rc != 0
+      notify:
+        - Reboot server
+  handlers:
+    - name: Reboot server
+      ansible.builtin.reboot:
+        msg: "Automated reboot from Ansible DNF upgrade"
+        reboot_timeout: 1800
+        test_command: uptime
