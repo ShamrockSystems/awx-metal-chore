@@ -1,0 +1,26 @@
+r710:
+  hosts:
+    r710a.metal.lan.shamrock.systems:
+      ansible_host: 192.168.0.20
+      ansible_port: 22
+      cidr_publ: 192.168.0.20/24 # enp5s0f0
+      cidr_mana: 10.83.77.90/24 # enp5s0f1
+      cidr_clus: 10.83.86.10/24 # eno1
+      cidr_virt: 10.83.73.10/24 # eno2
+      cidr_ceph: 10.83.67.10/24 # eno3 eno4 (bonded)
+    r710b.metal.lan.shamrock.systems:
+      ansible_host: 192.168.0.21
+      ansible_port: 22
+      cidr_publ: 192.168.0.21/24 # enp5s0f0
+      cidr_mana: 10.83.77.91/24 # enp5s0f1
+      cidr_clus: 10.83.86.11/24 # eno1
+      cidr_virt: 10.83.73.11/24 # eno2
+      cidr_ceph: 10.83.67.11/24 # eno3 eno4 (bonded)
+    r710c.metal.lan.shamrock.systems:
+      ansible_host: 192.168.0.22
+      ansible_port: 22
+      cidr_publ: 192.168.0.22/24 # enp5s0f0
+      cidr_mana: 10.83.77.92/24 # enp5s0f1
+      cidr_clus: 10.83.86.12/24 # eno1
+      cidr_virt: 10.83.73.12/24 # eno2
+      cidr_ceph: 10.83.67.12/24 # eno3 eno4 (bonded)

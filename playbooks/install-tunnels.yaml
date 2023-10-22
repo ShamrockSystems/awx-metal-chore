@@ -1,0 +1,22 @@
+---
+- name: Install Cloudflare Tunnel using Podman (r710a)
+  hosts: r710a.metal.lan.shamrock.systems
+  tasks:
+    - name: 'Install tunnel'
+      ansible.builtin.include_tasks: '../tasks/install-tunnel.yaml'
+  tags:
+    - r710a
+- name: Install Cloudflare Tunnel using Podman (r710b)
+  hosts: r710a.metal.lan.shamrock.systems
+  tasks:
+    - name: 'Install tunnel'
+      ansible.builtin.include_tasks: '../tasks/install-tunnel.yaml'
+  tags:
+    - r710b
+- name: Install Cloudflare Tunnel using Podman (r710c)
+  hosts: r710a.metal.lan.shamrock.systems
+  tasks:
+    - name: 'Install tunnel'
+      ansible.builtin.include_tasks: '../tasks/install-tunnel.yaml'
+  tags:
+    - r710c
