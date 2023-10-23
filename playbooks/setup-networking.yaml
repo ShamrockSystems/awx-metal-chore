@@ -1,0 +1,57 @@
+---
+- name: Setup networking with nmcli
+  hosts: r710
+  become: true
+  tasks:
+    - name: Configure enp5s0f0 for publ
+      community.general.nmcli:
+        conn_name: enp5s0f0
+        ifname: enp5s0f0
+        type: ethernet
+        ip4: '{{ publ_cidr }}'
+        gw4: '{{ publ_gate }}'
+        state: present
+    - name: Configure enp5s0f1 for mana
+      community.general.nmcli:
+        conn_name: enp5s0f1
+        ifname: enp5s0f1
+        type: ethernet
+        ip4: '{{ mana_cidr }}'
+        state: present
+    - name: Configure eno1 for clus
+      community.general.nmcli:
+        conn_name: eno1
+        ifname: eno1
+        type: ethernet
+        ip4: '{{ clus_cidr }}'
+        state: present
+    - name: Configure eno2 for virt
+      community.general.nmcli:
+        conn_name: eno2
+        ifname: eno2
+        type: ethernet
+        ip4: '{{ virt_cidr }}'
+        state: present
+    - name: Configure team0 for ceph
+      community.general.nmcli:
+        conn_name: team-ceph
+        ifname: team0
+        type: team
+        ip4: '{{ ceph_cidr }}'
+        state: present
+    - name: Configure eno3 as team0 slave
+      community.general.nmcli:
+        conn_name: eno3
+        ifname: eno3
+        type: team-slave
+        slave_type: team
+        master: team0
+        state: present
+    - name: Configure eno4 as team0 slave
+      community.general.nmcli:
+        conn_name: eno4
+        ifname: eno4
+        type: team-slave
+        slave_type: team
+        master: team0
+        state: present
