@@ -3,25 +3,64 @@ r710:
     r710a.metal.lan.shamrock.systems:
       ansible_host: 192.168.0.20
       ansible_port: 22
+      # enp5s0f0
       publ_gate: 192.168.0.1
-      publ_cidr: 192.168.0.20/24 # enp5s0f0
-      mana_cidr: 10.83.77.90/24 # enp5s0f1
-      clus_cidr: 10.83.86.10/24 # eno1
-      virt_cidr: 10.83.73.10/24 # eno2
-      ceph_cidr: 10.83.67.10/24 # eno3 eno4 (team)
+      publ_addr: 192.168.0.20
+      publ_cidr: "{{ publ_addr }}/24"
+      # enp5s0f1
+      mana_addr: 10.83.77.90
+      mana_cidr: "{{ mana_addr }}/24"
+      # eno1
+      clus_addr: 10.83.86.10
+      clus_cidr: "{{ clus_addr }}/24"
+      # eno2
+      virt_addr: 10.83.73.10
+      virt_cidr: "{{ virt_addr }}/24"
+      # eno3 eno4 (team)
+      ceph_addr: 10.83.67.10
+      ceph_cidr: "{{ ceph_addr }}/24"
     r710b.metal.lan.shamrock.systems:
       ansible_host: 192.168.0.21
       ansible_port: 22
-      publ_cidr: 192.168.0.21/24 # enp5s0f0
-      mana_cidr: 10.83.77.91/24 # enp5s0f1
-      clus_cidr: 10.83.86.11/24 # eno1
-      virt_cidr: 10.83.73.11/24 # eno2
-      ceph_cidr: 10.83.67.11/24 # eno3 eno4 (team)
+      # enp5s0f0
+      publ_gate: 192.168.0.1
+      publ_addr: 192.168.0.21/24
+      publ_cidr: "{{ publ_addr }}/24"
+      # enp5s0f1
+      mana_addr: 10.83.77.91/24
+      mana_cidr: "{{ mana_addr }}/24"
+      # eno1
+      clus_addr: 10.83.86.11/24
+      clus_cidr: "{{ clus_addr }}/24"
+      # eno2
+      virt_addr: 10.83.73.11/24
+      virt_cidr: "{{ virt_addr }}/24"
+      # eno3 eno4 (team)
+      ceph_addr: 10.83.67.11/24
+      ceph_cidr: "{{ ceph_addr }}/24"
     r710c.metal.lan.shamrock.systems:
       ansible_host: 192.168.0.22
       ansible_port: 22
-      publ_cidr: 192.168.0.22/24 # enp5s0f0
-      mana_cidr: 10.83.77.92/24 # enp5s0f1
-      clus_cidr: 10.83.86.12/24 # eno1
-      virt_cidr: 10.83.73.12/24 # eno2
-      ceph_cidr: 10.83.67.12/24 # eno3 eno4 (team)
+      # enp5s0f0
+      publ_gate: 192.168.0.1
+      publ_addr: 192.168.0.22/24
+      publ_cidr: "{{ publ_addr }}/24"
+      # enp5s0f1
+      mana_addr: 10.83.77.92/24
+      mana_cidr: "{{ mana_addr }}/24"
+      # eno1
+      clus_addr: 10.83.86.12/24
+      clus_cidr: "{{ clus_addr }}/24"
+      # eno2
+      virt_addr: 10.83.73.12/24
+      virt_cidr: "{{ virt_addr }}/24"
+      # eno3 eno4 (team)
+      ceph_addr: 10.83.67.12/24
+      ceph_cidr: "{{ ceph_addr }}/24"
+  vars:
+    ceph_net_cidr: "10.83.67.0/24"
+admin: # Ceph admin group used by cephadm-ansible
+  hosts:
+    r710a.metal.lan.shamrock.systems:
+    r710b.metal.lan.shamrock.systems:
+    r710c.metal.lan.shamrock.systems:

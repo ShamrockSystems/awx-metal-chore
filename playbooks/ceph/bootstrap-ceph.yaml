@@ -1,0 +1,13 @@
+---
+- name: Bootstrap Ceph cluster
+  hosts: r710a.metal.lan.shamrock.systems
+  become: true
+  tasks:
+    - name: Bootstrap cluster
+      ceph.cephadm.cephadm_bootstrap:
+        mon_ip: '{{ ceph_addr }}'
+        dashboard_user: '{{ ceph_dashboard_username }}'
+        dashboard_password: '{{ ceph_dashboard_password }}'
+        firewalld: true
+        allow_fqdn_hostname: true
+        cluster_network: '{{ ceph_net_cidr }}'
