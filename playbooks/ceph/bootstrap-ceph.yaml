@@ -11,3 +11,29 @@
         firewalld: true
         allow_fqdn_hostname: true
         cluster_network: '{{ ceph_net_cidr }}'
+  tags:
+    - bootstrap
+- name: Apply single host cluster settings
+  hosts: r710a.metal.lan.shamrock.systems
+  become: true
+  tasks:
+    - name: Set crush_chooseleaf_type
+      ceph.cephadm.ceph_config:
+        action: set
+        who: global
+        option: osd_crush_chooseleaf_type
+        value: '0'
+    - name: Set pool_default_size
+      ceph.cephadm.ceph_config:
+        action: set
+        who: global
+        option: osd_pool_default_size
+        value: '2'
+    - name: Set mgr_standby_modules
+      ceph.cephadm.ceph_config:
+        action: set
+        who: mgr
+        option: mgr_standby_modules
+        value: 'False'
+  tags:
+    - single-host

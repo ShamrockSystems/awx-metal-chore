@@ -59,6 +59,7 @@ r710:
       ceph_cidr: "{{ ceph_addr }}/24"
   vars:
     ceph_net_cidr: "10.83.67.0/24"
+    ceph_fsid: "aaf9b6f2-72f4-11ee-ba3a-a4badb3799c8"
 admin: # Ceph admin group used by cephadm-ansible
   hosts:
     r710a.metal.lan.shamrock.systems:
