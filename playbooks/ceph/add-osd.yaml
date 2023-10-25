@@ -1,0 +1,15 @@
+---
+- name: Add OSD daemons
+  hosts: r710
+  become: true
+  tasks:
+    - name: Create OSDs on free disks
+      ceph.cephadm.ceph_orch_apply:
+        spec: |
+          service_type: osd
+          service_id: default_drive_group
+          placement:
+            host_pattern: '*'
+          spec:
+            data_devices:
+              all: true
