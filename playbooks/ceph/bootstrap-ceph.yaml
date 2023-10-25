@@ -37,3 +37,21 @@
         value: 'False'
   tags:
     - single-host
+- name: Set memory tuning parameters
+  hosts: r710a.metal.lan.shamrock.systems
+  become: true
+  tasks:
+    - name: Set autotune_memory_target_ratio
+      ceph.cephadm.ceph_config:
+        action: set
+        who: mgr
+        option: mgr/cephadm/autotune_memory_target_ratio
+        value: '0.2' # Smaller ratio for hyper-converged
+    - name: Enable memory autotuning
+      ceph.cephadm.ceph_config:
+        action: set
+        who: osd
+        option: osd_memory_target_autotune
+        value: 'true'
+  tags:
+    - memory-tuning
