@@ -1,0 +1,33 @@
+---
+- name: Install kmod-mpt3sas package from ELRepo on EL 9
+  hosts: r710
+  become: true
+  tasks:
+    - name: Import ELRepo GPG Key
+      rpm_key:
+        key: https://www.elrepo.org/RPM-GPG-KEY-elrepo.org
+        state: present
+    - name: Install ELRepo Repository
+      yum:
+        name: 'https://www.elrepo.org/elrepo-release-9.el9.elrepo.noarch.rpm'
+        state: present
+        update_cache: false
+    - name: Install kmod-mpt3sas
+      yum:
+        name: kmod-mpt3sas
+        state: latest
+        update_cache: true
+    - name: Check if a reboot is required
+      command: needs-restarting -r
+      register: reg_reboot_required
+      ignore_errors: true
+      failed_when: false
+      changed_when: reg_reboot_required.rc != 0
+      notify:
+        - Reboot server
+  handlers:
+    - name: Reboot server
+      ansible.builtin.reboot:
+        msg: 'Automated reboot from Ansible kmod-mpt3sas install'
+        reboot_timeout: 1800
+        test_command: uptime
