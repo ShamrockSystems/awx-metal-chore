@@ -43,25 +43,33 @@ r710:
       ansible_port: 22
       # enp5s0f0
       publ_gate: 192.168.0.1
-      publ_addr: 192.168.0.22/24
+      publ_addr: 192.168.0.22
       publ_cidr: "{{ publ_addr }}/24"
       # enp5s0f1
-      mana_addr: 10.83.77.92/24
+      mana_addr: 10.83.77.92
       mana_cidr: "{{ mana_addr }}/24"
       # eno1
-      clus_addr: 10.83.86.12/24
+      clus_addr: 10.83.86.12
       clus_cidr: "{{ clus_addr }}/24"
       # eno2
-      virt_addr: 10.83.73.12/24
+      virt_addr: 10.83.73.12
       virt_cidr: "{{ virt_addr }}/24"
       # eno3 eno4 (team)
-      ceph_addr: 10.83.67.12/24
+      ceph_addr: 10.83.67.12
       ceph_cidr: "{{ ceph_addr }}/24"
   vars:
     ceph_net_cidr: "10.83.67.0/24"
-    ceph_fsid: "aaf9b6f2-72f4-11ee-ba3a-a4badb3799c8"
-admin: # Ceph admin group used by cephadm-ansible
-  hosts:
-    r710a.metal.lan.shamrock.systems:
-    r710b.metal.lan.shamrock.systems:
-    r710c.metal.lan.shamrock.systems:
+k3s_cluster:
+  children:
+    server:
+      hosts:
+        r710a.metal.lan.shamrock.systems:
+        r710b.metal.lan.shamrock.systems:
+        r710c.metal.lan.shamrock.systems:
+    agent:
+  vars:
+    k3s_version: v1.29.0+k3s1
+    api_endpoint: "{{ hostvars[groups['server'][0]]['clus_addr'] }}"
+    user_kubectl: false
+    extra_server_args: ""
+    extra_agent_args: ""
