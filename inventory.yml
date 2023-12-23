@@ -19,6 +19,8 @@ r710:
       # eno3 eno4 (team)
       ceph_addr: 10.83.67.10
       ceph_cidr: "{{ ceph_addr }}/24"
+      # k3s extra args
+      extra_server_args: "--node-ip {{ clus_addr }} --node-external-ip {{ clus_addr }}"
     r710b.metal.lan.shamrock.systems:
       ansible_host: 192.168.0.21
       ansible_port: 22
@@ -38,6 +40,8 @@ r710:
       # eno3 eno4 (team)
       ceph_addr: 10.83.67.11/24
       ceph_cidr: "{{ ceph_addr }}/24"
+      # k3s extra args
+      extra_server_args: "--node-ip {{ clus_addr }} --node-external-ip {{ clus_addr }}"
     r710c.metal.lan.shamrock.systems:
       ansible_host: 192.168.0.22
       ansible_port: 22
@@ -57,6 +61,8 @@ r710:
       # eno3 eno4 (team)
       ceph_addr: 10.83.67.12
       ceph_cidr: "{{ ceph_addr }}/24"
+      # k3s extra args
+      extra_server_args: "--node-ip {{ clus_addr }} --node-external-ip {{ clus_addr }}"
   vars:
     ceph_net_cidr: "10.83.67.0/24"
 k3s_cluster:
@@ -71,5 +77,4 @@ k3s_cluster:
     k3s_version: v1.29.0+k3s1
     api_endpoint: "{{ hostvars[groups['server'][0]]['clus_addr'] }}"
     user_kubectl: false
-    extra_server_args: ""
     extra_agent_args: ""
