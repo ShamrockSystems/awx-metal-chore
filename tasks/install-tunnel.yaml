@@ -1,4 +1,10 @@
 ---
+- name: Set container can access certificates
+  become: true
+  ansible.posix.seboolean:
+    name: container_read_certs
+    state: true
+    persistent: true
 - name: Pull cloudflare/cloudflared image
   become: true
   containers.podman.podman_image:

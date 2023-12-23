@@ -2,6 +2,7 @@
 collections:
   - containers.podman
   - community.general
+  - ansible.posix
   - name: k3s.orchestration
     source: git+https://github.com/GreenCappuccino/k3s-ansible.git
     type: git
