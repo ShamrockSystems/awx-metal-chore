@@ -64,6 +64,11 @@ r710:
       # k3s extra args
       extra_server_args: "--node-ip {{ clus_addr }} --node-external-ip {{ clus_addr }}"
   vars:
+    publ_mtu: 1500
+    mana_mtu: 1500
+    clus_mtu: 9000
+    virt_mtu: 9000
+    ceph_mtu: 9000
     ceph_net_cidr: "10.83.67.0/24"
 k3s_cluster:
   children:

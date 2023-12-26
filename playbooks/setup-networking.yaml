@@ -10,6 +10,8 @@
         type: ethernet
         ip4: '{{ publ_cidr }}'
         gw4: '{{ publ_gate }}'
+        mtu: '{{ publ_mtu }}'
+        method6: 'disabled'
         state: present
     - name: Configure enp5s0f1 for mana
       community.general.nmcli:
@@ -17,6 +19,8 @@
         ifname: enp5s0f1
         type: ethernet
         ip4: '{{ mana_cidr }}'
+        mtu: '{{ mana_mtu }}'
+        method6: 'disabled'
         state: present
     - name: Configure eno1 for clus
       community.general.nmcli:
@@ -24,6 +28,8 @@
         ifname: eno1
         type: ethernet
         ip4: '{{ clus_cidr }}'
+        mtu: '{{ clus_mtu }}'
+        method6: 'disabled'
         state: present
     - name: Configure eno2 for virt
       community.general.nmcli:
@@ -31,13 +37,18 @@
         ifname: eno2
         type: ethernet
         ip4: '{{ virt_cidr }}'
+        mtu: '{{ virt_mtu }}'
+        method6: 'disabled'
         state: present
     - name: Configure team0 for ceph
       community.general.nmcli:
         conn_name: team-ceph
         ifname: team0
         type: team
+        runner: 'loadbalance'
         ip4: '{{ ceph_cidr }}'
+        mtu: '{{ ceph_mtu }}'
+        method6: 'disabled'
         state: present
     - name: Configure eno3 as team0 slave
       community.general.nmcli:
@@ -46,6 +57,8 @@
         type: team-slave
         slave_type: team
         master: team0
+        mtu: '{{ ceph_mtu }}'
+        method6: 'disabled'
         state: present
     - name: Configure eno4 as team0 slave
       community.general.nmcli:
@@ -54,4 +67,6 @@
         type: team-slave
         slave_type: team
         master: team0
+        mtu: '{{ ceph_mtu }}'
+        method6: 'disabled'
         state: present
