@@ -26,19 +26,19 @@ r710:
       ansible_port: 22
       # enp5s0f0
       publ_gate: 192.168.0.1
-      publ_addr: 192.168.0.21/24
+      publ_addr: 192.168.0.21
       publ_cidr: "{{ publ_addr }}/24"
       # enp5s0f1
-      mana_addr: 10.83.77.91/24
+      mana_addr: 10.83.77.91
       mana_cidr: "{{ mana_addr }}/24"
       # eno1
-      clus_addr: 10.83.86.11/24
+      clus_addr: 10.83.86.11
       clus_cidr: "{{ clus_addr }}/24"
       # eno2
-      virt_addr: 10.83.73.11/24
+      virt_addr: 10.83.73.11
       virt_cidr: "{{ virt_addr }}/24"
       # eno3 eno4 (team)
-      ceph_addr: 10.83.67.11/24
+      ceph_addr: 10.83.67.11
       ceph_cidr: "{{ ceph_addr }}/24"
       # k3s extra args
       extra_server_args: "--node-ip {{ clus_addr }} --node-external-ip {{ clus_addr }}"
