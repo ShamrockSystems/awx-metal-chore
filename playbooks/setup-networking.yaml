@@ -40,33 +40,33 @@
         mtu: '{{ virt_mtu }}'
         method6: 'disabled'
         state: present
-    - name: Configure team0 for ceph
+    - name: Configure bond0 for ceph
       community.general.nmcli:
-        conn_name: team-ceph
-        ifname: team0
-        type: team
-        runner: 'loadbalance'
+        conn_name: bond0
+        ifname: bond0
+        type: bond
+        mode: balance-tlb
         ip4: '{{ ceph_cidr }}'
         mtu: '{{ ceph_mtu }}'
         method6: 'disabled'
         state: present
-    - name: Configure eno3 as team0 slave
+    - name: Configure eno3 as bond0 slave
       community.general.nmcli:
-        conn_name: eno3
+        conn_name: bond0-slave1
         ifname: eno3
-        type: team-slave
-        slave_type: team
-        master: team0
+        type: bond-slave
+        slave_type: bond
+        master: bond0
         mtu: '{{ ceph_mtu }}'
         method6: 'disabled'
         state: present
-    - name: Configure eno4 as team0 slave
+    - name: Configure eno4 as bond0 slave
       community.general.nmcli:
-        conn_name: eno4
+        conn_name: bond0-slave2
         ifname: eno4
-        type: team-slave
-        slave_type: team
-        master: team0
+        type: bond-slave
+        slave_type: bond
+        master: bond0
         mtu: '{{ ceph_mtu }}'
         method6: 'disabled'
         state: present
