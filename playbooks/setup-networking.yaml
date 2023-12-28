@@ -84,10 +84,6 @@
           nameserver 1.0.0.1
         dest: /etc/resolv.conf.manually-configured
         mode: '0644'
-    - name: Delete resolv.conf
-      ansible.builtin.file:
-        path: /etc/resolv.conf
-        state: absent
     - name: Soft link resolv.conf to resolv.conf.manually-configured
       ansible.builtin.file:
         src: /etc/resolv.conf.manually-configured
