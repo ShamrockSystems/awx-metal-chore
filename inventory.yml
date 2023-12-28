@@ -64,6 +64,7 @@ r710:
       # k3s extra args
       extra_server_args: "--node-ip {{ clus_addr }} --node-external-ip {{ clus_addr }}"
   vars:
+    dns_servers: "1.1.1.1,1.0.0.1"
     publ_mtu: 1500
     mana_mtu: 1500
     clus_mtu: 1500

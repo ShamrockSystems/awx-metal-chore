@@ -11,6 +11,8 @@
         ip4: '{{ publ_cidr }}'
         gw4: '{{ publ_gate }}'
         mtu: '{{ publ_mtu }}'
+        dns4: '{{ dns_servers }}'
+        dns4_ignore_auto: true
         method6: 'disabled'
         state: present
     - name: Configure enp5s0f1 for mana
@@ -70,3 +72,24 @@
         mtu: '{{ ceph_mtu }}'
         method6: 'disabled'
         state: present
+# Similar issue to: https://serverfault.com/questions/1130379/how-to-configure-networkmanager-to-not-set-default-search-domain-in-rhel8-based
+- name: Setup resolv.conf
+  hosts: r710
+  become: true
+  tasks:
+    - name: Create resolv.conf.manually-configured
+      ansible.builtin.copy:
+        content: |
+          nameserver 1.1.1.1
+          nameserver 1.0.0.1
+        dest: /etc/resolv.conf.manually-configured
+        mode: '0644'
+    - name: Delete resolv.conf
+      ansible.builtin.file:
+        path: /etc/resolv.conf
+        state: absent
+    - name: Soft link resolv.conf to resolv.conf.manually-configured
+      ansible.builtin.file:
+        src: /etc/resolv.conf.manually-configured
+        dest: /etc/resolv.conf
+        state: link
