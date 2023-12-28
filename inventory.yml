@@ -66,7 +66,7 @@ r710:
   vars:
     publ_mtu: 1500
     mana_mtu: 1500
-    clus_mtu: 9000
+    clus_mtu: 1500
     virt_mtu: 9000
     ceph_mtu: 9000
     ceph_net_cidr: "10.83.67.0/24"
