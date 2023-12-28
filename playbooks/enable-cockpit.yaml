@@ -8,3 +8,14 @@
         name: cockpit.socket
         state: started
         enabled: true
+    - name: Install cockpit-pcp
+      become: true
+      ansible.builtin.dnf:
+        name: cockpit-pcp 
+        state: present
+    - name: Enable and start pmlogger
+      become: true
+      ansible.builtin.systemd_service:
+        name: pmlogger.service
+        state: started
+        enabled: true
