@@ -1,0 +1,48 @@
+---
+- name: Install and configure dnf-automatic
+  hosts: r710
+  become: true
+  tasks:
+    - name: Install dnf-automatic
+      ansible.builtin.dnf:
+        name: dnf-automatic
+        state: present
+    - name: Install yum-utils
+      ansible.builtin.dnf:
+        name: yum-utils
+        state: present
+    - name: Template configuration file
+      ansible.builtin.template:
+        src: automatic.conf.j2
+        dest: /etc/dnf/automatic.conf
+        mode: 0644
+    - name: Set automatic reboot time for node
+      ansible.builtin.lineinfile:
+        path: /usr/lib/systemd/system/dnf-automatic.timer
+        regexp: '^OnCalendar='
+        line: 'OnCalendar=*-*-* {{ dnf_automatic_reboot_time }}'
+      notify: Reload systemd
+    - name: Start and enable systemd timer for dnf-automatic
+      ansible.builtin.systemd_service:
+        name: dnf-automatic.timer
+        state: started
+        enabled: true
+  handlers:
+    - name: Reload systemd
+      ansible.builtin.systemd:
+        daemon_reload: yes
+- name: Enable live-kernel patching
+  hosts: r710
+  become: true
+  tasks:
+    - name: Install kpatch-dnf
+      ansible.builtin.dnf:
+        name: kpatch-dnf
+        state: present
+    - name: Ensure dnf kpatch auto -y
+      ansible.builtin.command:
+        argv:
+          - dnf
+          - kpatch
+          - auto
+          - -y
