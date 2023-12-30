@@ -47,7 +47,7 @@
         conn_name: bond0
         ifname: bond0
         type: bond
-        mode: balance-tlb
+        mode: balance-rr
         ip4: '{{ ceph_cidr }}'
         mtu: '{{ ceph_mtu }}'
         method6: 'disabled'
