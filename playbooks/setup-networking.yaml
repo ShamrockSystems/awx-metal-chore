@@ -42,13 +42,22 @@
         mtu: '{{ virt_mtu }}'
         method6: 'disabled'
         state: present
+    - name: Configure br0 for ceph multus
+      community.general.nmcli:
+        conn_name: br0
+        state: present
+        type: bridge
+        ip4: '{{ ceph_cidr }}'
+        mtu: '{{ ceph_mtu }}'
+        autoconnect: yes
     - name: Configure bond0 for ceph
       community.general.nmcli:
         conn_name: bond0
         ifname: bond0
+        slave_type: bridge
+        master: br0
         type: bond
         mode: balance-rr
-        ip4: '{{ ceph_cidr }}'
         mtu: '{{ ceph_mtu }}'
         method6: 'disabled'
         state: present
