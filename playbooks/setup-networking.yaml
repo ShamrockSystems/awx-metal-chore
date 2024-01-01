@@ -49,6 +49,7 @@
         type: bridge
         ip4: '{{ ceph_cidr }}'
         mtu: '{{ ceph_mtu }}'
+        method6: 'disabled'
         autoconnect: yes
     - name: Configure bond0 for ceph
       community.general.nmcli:
