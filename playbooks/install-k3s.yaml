@@ -20,8 +20,8 @@
         content: |
           apiVersion: kubelet.config.k8s.io/v1beta1
           kind: KubeletConfiguration
-          shutdownGracePeriod: 120s
-          shutdownGracePeriodCriticalPods: 90s
+          shutdownGracePeriod: 60m
+          shutdownGracePeriodCriticalPods: 30m
           healthzBindAddress: 0.0.0.0
         dest: '/etc/rancher/k3s/kubelet.yaml'
         mode: '0644'
