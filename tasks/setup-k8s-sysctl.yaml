@@ -1,0 +1,15 @@
+---
+- name: Loop through sysctl parameters
+  ansible.posix.sysctl:
+      name: "{{ item.name }}"
+      value: "{{ item.value }}"
+      sysctl_set: true
+      reload: true
+      state: present
+      sysctl_file: /etc/sysctl.d/00-custom-kubernetes.conf
+  loop:
+      - { name: "vm.max_map_count", value: "262144" }
+      - { name: "vm.overcommit_memory", value: "1" }
+      - { name: "fs.aio-max-nr", value: "1048576" }
+      - { name: "fs.inotify.max_user_watches", value: "524288" }
+      - { name: "fs.file-max", value: "524288" }

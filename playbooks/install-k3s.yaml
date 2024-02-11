@@ -1,4 +1,10 @@
 ---
+- name: Setup sysctl entries
+  hosts: r710
+  become: true
+  tasks:
+    - name: 'Setup Kubernetes sysctl entries'
+      ansible.builtin.include_tasks: '../tasks/setup-k8s-sysctl.yaml'
 - name: Prepare k3s
   hosts: r710
   tasks:
