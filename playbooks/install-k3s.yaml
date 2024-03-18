@@ -31,6 +31,12 @@
           healthzBindAddress: 0.0.0.0
         dest: '/etc/rancher/k3s/kubelet.yaml'
         mode: '0644'
+    - name: Enable wireguard kernel module for mTLS
+      become: true
+      community.general.modprobe:
+        name: wireguard
+        state: present
+        persistent: present
 - name: Install k3s Server
   hosts: server
   become: true
