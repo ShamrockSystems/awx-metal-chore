@@ -3,6 +3,7 @@ r710:
     r710a.metal.lan.shamrock.systems:
       ansible_host: 192.168.0.20
       ansible_port: 22
+      cockpit_host: r710a-metal.shamrock.systems
       # enp5s0f0
       publ_gate: 192.168.0.1
       publ_addr: 192.168.0.20
@@ -26,6 +27,7 @@ r710:
     r710b.metal.lan.shamrock.systems:
       ansible_host: 192.168.0.21
       ansible_port: 22
+      cockpit_host: r710b-metal.shamrock.systems
       # enp5s0f0
       publ_gate: 192.168.0.1
       publ_addr: 192.168.0.21
