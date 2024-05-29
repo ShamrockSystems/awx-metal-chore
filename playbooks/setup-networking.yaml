@@ -8,39 +8,59 @@
         conn_name: enp5s0f0
         ifname: enp5s0f0
         type: ethernet
-        ip4: '{{ publ_cidr }}'
-        gw4: '{{ publ_gate }}'
-        mtu: '{{ publ_mtu }}'
-        dns4: '{{ dns_servers }}'
+        ip4: "{{ publ_cidr }}"
+        gw4: "{{ publ_gate }}"
+        mtu: "{{ publ_mtu }}"
+        dns4: "{{ dns_servers }}"
         dns4_ignore_auto: true
-        method6: 'disabled'
+        method6: "disabled"
         state: present
     - name: Configure enp5s0f1 for mana
       community.general.nmcli:
         conn_name: enp5s0f1
         ifname: enp5s0f1
         type: ethernet
-        ip4: '{{ mana_cidr }}'
-        mtu: '{{ mana_mtu }}'
-        method6: 'disabled'
+        ip4: "{{ mana_cidr }}"
+        mtu: "{{ mana_mtu }}"
+        method6: "disabled"
         state: present
     - name: Configure eno1 for clus
       community.general.nmcli:
         conn_name: eno1
         ifname: eno1
         type: ethernet
-        ip4: '{{ clus_cidr }}'
-        mtu: '{{ clus_mtu }}'
-        method6: 'disabled'
+        ip4: "{{ clus_cidr }}"
+        mtu: "{{ clus_mtu }}"
+        method6: "disabled"
         state: present
     - name: Configure eno2 for virt
       community.general.nmcli:
         conn_name: eno2
         ifname: eno2
         type: ethernet
-        ip4: '{{ virt_cidr }}'
-        mtu: '{{ virt_mtu }}'
-        method6: 'disabled'
+        ip4: "{{ virt_cidr }}"
+        mtu: "{{ virt_mtu }}"
+        method6: "disabled"
+        state: present
+    - name: Configure eno2 VLAN 10
+      community.general.nmcli:
+        conn_name: eno2vlan10
+        type: vlan
+        vlandev: eno2
+        vlanid: 10
+        ip4: "{{ virt_vlan10_cidr }}"
+        mtu: "{{ virt_mtu }}"
+        method6: "disabled"
+        state: present
+    - name: Configure eno2 VLAN 20
+      community.general.nmcli:
+        conn_name: eno2vlan20
+        type: vlan
+        vlandev: eno2
+        vlanid: 20
+        ip4: "{{ virt_vlan20_cidr }}"
+        mtu: "{{ virt_mtu }}"
+        method6: "disabled"
         state: present
     - name: Configure bond0 for ceph
       community.general.nmcli:
@@ -48,9 +68,9 @@
         ifname: bond0
         type: bond
         mode: balance-rr
-        ip4: '{{ ceph_cidr }}'
-        mtu: '{{ ceph_mtu }}'
-        method6: 'disabled'
+        ip4: "{{ ceph_cidr }}"
+        mtu: "{{ ceph_mtu }}"
+        method6: "disabled"
         state: present
     - name: Configure eno3 as bond0 slave
       community.general.nmcli:
@@ -59,8 +79,8 @@
         type: bond-slave
         slave_type: bond
         master: bond0
-        mtu: '{{ ceph_mtu }}'
-        method6: 'disabled'
+        mtu: "{{ ceph_mtu }}"
+        method6: "disabled"
         state: present
     - name: Configure eno4 as bond0 slave
       community.general.nmcli:
@@ -69,8 +89,8 @@
         type: bond-slave
         slave_type: bond
         master: bond0
-        mtu: '{{ ceph_mtu }}'
-        method6: 'disabled'
+        mtu: "{{ ceph_mtu }}"
+        method6: "disabled"
         state: present
 # Similar issue to: https://serverfault.com/questions/1130379/how-to-configure-networkmanager-to-not-set-default-search-domain-in-rhel8-based
 - name: Setup resolv.conf
@@ -83,7 +103,7 @@
           nameserver 1.1.1.1
           nameserver 1.0.0.1
         dest: /etc/resolv.conf.manually-configured
-        mode: '0644'
+        mode: "0644"
     - name: Soft link resolv.conf to resolv.conf.manually-configured
       ansible.builtin.file:
         src: /etc/resolv.conf.manually-configured
