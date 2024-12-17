@@ -42,23 +42,33 @@
         mtu: "{{ virt_mtu }}"
         method6: "disabled"
         state: present
-    - name: Configure eno2 VLAN 10
+    - name: Configure eno2 VLAN 310
       community.general.nmcli:
-        conn_name: eno2vlan10
+        conn_name: eno2vlan310
         type: vlan
         vlandev: eno2
-        vlanid: 10
-        ip4: "{{ virt_vlan10_cidr }}"
+        vlanid: 310
+        ip4: "{{ virt_vlan310_cidr }}"
         mtu: "{{ virt_mtu }}"
         method6: "disabled"
         state: present
-    - name: Configure eno2 VLAN 20
+    - name: Configure eno2 VLAN 320
       community.general.nmcli:
-        conn_name: eno2vlan20
+        conn_name: eno2vlan320
         type: vlan
         vlandev: eno2
-        vlanid: 20
-        ip4: "{{ virt_vlan20_cidr }}"
+        vlanid: 320
+        ip4: "{{ virt_vlan320_cidr }}"
+        mtu: "{{ virt_mtu }}"
+        method6: "disabled"
+        state: present
+    - name: Configure eno2 VLAN 330
+      community.general.nmcli:
+        conn_name: eno2vlan330
+        type: vlan
+        vlandev: eno2
+        vlanid: 330
+        ip4: "{{ virt_vlan330_cidr }}"
         mtu: "{{ virt_mtu }}"
         method6: "disabled"
         state: present

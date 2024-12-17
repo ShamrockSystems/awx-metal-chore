@@ -1,7 +1,7 @@
 r710:
   hosts:
     r710a.metal.lan.shamrock.systems:
-      ansible_host: 192.168.0.20
+      ansible_host: 10.83.86.10
       ansible_port: 22
       cockpit_host: r710a-metal.shamrock.systems
       # enp5s0f0
@@ -17,12 +17,15 @@ r710:
       # eno2
       virt_addr: 10.83.73.10
       virt_cidr: "{{ virt_addr }}/24"
-      # eno2 VLAN10 (Kubevirt live-migration)
-      virt_vlan10_addr: 10.76.10.10
-      virt_vlan10_cidr: "{{ virt_vlan10_addr }}/24"
-      # eno2 VLAN20 (Windows domain)
-      virt_vlan20_addr: 10.76.20.10
-      virt_vlan20_cidr: "{{ virt_vlan20_addr }}/24"
+      # eno2 VLAN310 (Kubevirt live-migration)
+      virt_vlan310_addr: 10.76.10.10
+      virt_vlan310_cidr: "{{ virt_vlan310_addr }}/24"
+      # eno2 VLAN320 (Windows domain)
+      virt_vlan320_addr: 10.76.20.10
+      virt_vlan320_cidr: "{{ virt_vlan320_addr }}/24"
+      # eno2 VLAN330 (Generic virtual network)
+      virt_vlan330_addr: 10.76.30.10
+      virt_vlan330_cidr: "{{ virt_vlan330_addr }}/24"
       # eno3 eno4 (bond)
       ceph_addr: 10.83.67.10
       ceph_cidr: "{{ ceph_addr }}/24"
@@ -31,7 +34,7 @@ r710:
       # dnf_automatic
       dnf_automatic_reboot_time: "3:00"
     r710b.metal.lan.shamrock.systems:
-      ansible_host: 192.168.0.21
+      ansible_host: 10.83.86.11
       ansible_port: 22
       cockpit_host: r710b-metal.shamrock.systems
       # enp5s0f0
@@ -47,12 +50,15 @@ r710:
       # eno2
       virt_addr: 10.83.73.11
       virt_cidr: "{{ virt_addr }}/24"
-      # eno2 VLAN10 (Kubevirt live-migration)
-      virt_vlan10_addr: 10.76.10.11
-      virt_vlan10_cidr: "{{ virt_vlan10_addr }}/24"
-      # eno2 VLAN20 (Windows domain)
-      virt_vlan20_addr: 10.76.20.11
-      virt_vlan20_cidr: "{{ virt_vlan20_addr }}/24"
+      # eno2 VLAN310 (Kubevirt live-migration)
+      virt_vlan310_addr: 10.76.10.11
+      virt_vlan310_cidr: "{{ virt_vlan310_addr }}/24"
+      # eno2 VLAN320 (Windows domain)
+      virt_vlan320_addr: 10.76.20.11
+      virt_vlan320_cidr: "{{ virt_vlan320_addr }}/24"
+      # eno2 VLAN330 (Generic virtual network)
+      virt_vlan330_addr: 10.76.30.11
+      virt_vlan330_cidr: "{{ virt_vlan330_addr }}/24"
       # eno3 eno4 (bond)
       ceph_addr: 10.83.67.11
       ceph_cidr: "{{ ceph_addr }}/24"
@@ -61,7 +67,7 @@ r710:
       # dnf_automatic
       dnf_automatic_reboot_time: "4:00"
     r710c.metal.lan.shamrock.systems:
-      ansible_host: 192.168.0.22
+      ansible_host: 10.83.86.12
       ansible_port: 22
       # enp5s0f0
       publ_gate: 192.168.0.1
@@ -76,12 +82,15 @@ r710:
       # eno2
       virt_addr: 10.83.73.12
       virt_cidr: "{{ virt_addr }}/24"
-      # eno2 VLAN10 (Kubevirt live-migration)
-      virt_vlan10_addr: 10.76.10.12
-      virt_vlan10_cidr: "{{ virt_vlan10_addr }}/24"
-      # eno2 VLAN20 (Windows domain)
-      virt_vlan20_addr: 10.76.20.12
-      virt_vlan20_cidr: "{{ virt_vlan20_addr }}/24"
+      # eno2 VLAN310 (Kubevirt live-migration)
+      virt_vlan310_addr: 10.76.10.12
+      virt_vlan310_cidr: "{{ virt_vlan310_addr }}/24"
+      # eno2 VLAN320 (Windows domain)
+      virt_vlan320_addr: 10.76.20.12
+      virt_vlan320_cidr: "{{ virt_vlan320_addr }}/24"
+      # eno2 VLAN330 (Generic virtual network)
+      virt_vlan330_addr: 10.76.30.12
+      virt_vlan330_cidr: "{{ virt_vlan330_addr }}/24"
       # eno3 eno4 (bond)
       ceph_addr: 10.83.67.12
       ceph_cidr: "{{ ceph_addr }}/24"
